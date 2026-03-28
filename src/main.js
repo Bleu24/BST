@@ -1,20 +1,8 @@
-import { LinkedList } from "./LinkedList.js";
+import { removeDuplicate } from "./lib/removeDupe.js";
+import { Tree } from "./Tree.js";
 
-const list = new LinkedList();
+const tree = new Tree();
+const arr = removeDuplicate([20, 10, 20, 30, 2, 4, 35, 6, 2, 7, 32, 1, 7, 3, 8, 3, 6, 7, 23]).sort((a, b) => a - b);
 
-list.append("dog");
-list.append("cat");
-list.append("parrot");
-list.append("hamster");
-list.append("snake");
-list.append("turtle");
-
-console.log(list.size());
-console.log(list.toString());
-
-
-list.removeAt(1);
-console.log(list.size());
-console.log(list.toString())
-
+tree.buildTree(arr);
 
