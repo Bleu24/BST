@@ -6,3 +6,14 @@ const arr = removeDuplicate([20, 10, 20, 30, 2, 4, 35, 6, 2, 7, 32, 1, 7, 3, 8, 
 
 tree.buildTree(arr);
 
+
+// tree.deleteItem(5);
+tree.prettyPrint(tree.root);
+
+
+
+// tree.levelOrderForEach(val => console.log(val));
+// tree.preOrderForEach(val => console.log(val));
+// tree.inOrderForEach(val => console.log(val));
+// tree.postOrderForEach(val => console.log(val));
+tree.height(1);
