@@ -1,4 +1,4 @@
-import { removeDuplicate } from "./lib/removeDupe.js";
+import { getSuccessor, removeDuplicate } from "./lib/removeDupe.js";
 import { Node } from "./Node.js";
 
 export class Tree {
@@ -21,19 +21,177 @@ export class Tree {
     buildTree(arr) {
         const sorted = removeDuplicate(arr).sort((a, b) => a - b);
         this.root = this.sortedBST(arr, 0, sorted.length - 1);
-        this.#prettyPrint(this.root);
         return this.root;
     }
 
-    #prettyPrint(node, prefix = "", isLeft = true) {
+    prettyPrint(node, prefix = "", isLeft = true) {
         if (node === null || node === undefined) {
             return;
         }
 
-        this.#prettyPrint(node.rightChild, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+        this.prettyPrint(node.rightChild, `${prefix}${isLeft ? '│   ' : '    '}`, false);
         console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
-        this.#prettyPrint(node.leftChild, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+        this.prettyPrint(node.leftChild, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
+
+    search(node, value) {
+        if (!node) return false;
+        if (node.value === value) return true;
+        return this.search(node.leftChild, value) || this.search(node.rightChild, value);
+    }
+
+    includes(value) {
+        return this.search(this.root, value);
+    }
+
+    insert(value) {
+        const insertAlgo = (node, value) => {
+
+            if (!node) return new Node(value);
+
+            if (node.value > value) node.leftChild = insertAlgo(node.leftChild, value);
+            else if (node.value < value) node.rightChild = insertAlgo(node.rightChild, value);
+
+            return node;
+        }
+
+        this.root = insertAlgo(this.root, value);
+    }
+
+    deleteItem(value) {
+
+        const deleteAlgo = (node, value) => {
+
+            if (!node) return null;
+            if (node.value > value) node.leftChild = deleteAlgo(node.leftChild, value);
+            if (node.value < value) node.rightChild = deleteAlgo(node.rightChild, value);
+
+            if (node.value === value) {
+
+                if (node.leftChild && node.rightChild) {
+                    const succ = getSuccessor(node);
+                    node.value = succ.value;
+                    node.rightChild = deleteAlgo(node.rightChild, succ.value);
+                    return node;
+                }
+
+                if (node.leftChild || node.rightChild) {
+                    return node.leftChild || node.rightChild;
+                }
+
+
+                if (!node.leftChild && !node.rightChild) {
+                    return null;
+                }
+            }
+
+            return node;
+        }
+
+        this.root = deleteAlgo(this.root, value);
+
+    }
+
+    levelOrderForEach(callback) {
+        if (!callback) throw new Error("Callback is required!");
+
+        if (!this.root) return null;
+        let queue = [];
+        queue.push(this.root);
+
+        while (!(queue.length === 0)) {
+            const curr = queue[0];
+            callback(curr.value);
+            if (curr.leftChild) queue.push(curr.leftChild);
+            if (curr.rightChild) queue.push(curr.rightChild);
+            queue = queue.slice(1);
+        }
+
+    }
+
+    preOrderForEach(callback) {
+        if (!callback) throw new Error("Callback is required!");
+
+        if (!this.root) return null;
+
+        const visitNode = (node) => {
+            if (!node) return;
+
+            callback(node.value);
+
+            visitNode(node.leftChild);
+            visitNode(node.rightChild);
+        }
+
+        visitNode(this.root);
+    }
+
+    inOrderForEach(callback) {
+        if (!callback) throw new Error("Callback is required!");
+
+        if (!this.root) return null;
+
+        const visitNode = (node) => {
+            if (!node) return;
+
+            visitNode(node.leftChild);
+            callback(node.value);
+            visitNode(node.rightChild);
+        }
+
+        visitNode(this.root);
+    }
+
+    postOrderForEach(callback) {
+        if (!callback) throw new Error("Callback is required!");
+
+        if (!this.root) return null;
+
+        const visitNode = (node) => {
+            if (!node) return;
+
+            visitNode(node.leftChild);
+            visitNode(node.rightChild);
+            callback(node.value);
+        }
+
+        visitNode(this.root);
+    }
+
+    height(value) {
+        const search = (node, value) => {
+            if (!node) return null;
+
+            if (node.value === value) return node;
+
+            if (node.value > value) return search(node.leftChild, value);
+            else if (node.value < value) return search(node.rightChild, value);
+
+            return node;
+        }
+
+        const calcHeight = (node) => {
+
+            if (!node) return -1;
+            if (!node.leftChild && !node.rightChild) return 0;
+
+            let leftHeight = calcHeight(node.leftChild);
+            let rightHeight = calcHeight(node.rightChild);
+
+            return 1 + Math.max(leftHeight, rightHeight);
+        }
+
+        const node = search(this.root, value);
+        const height = calcHeight(node);
+        console.log(height);
+        return height
+
+    }
+
+
+
+
+
 
 
 }
