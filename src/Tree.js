@@ -226,6 +226,14 @@ export class Tree {
         return isBalancedAlgo(this.root) > 0;
     }
 
+    rebalance() {
+        const nodes = [];
+
+        this.inOrderForEach(nodeValue => nodes.push(nodeValue));
+
+        return this.buildTree(nodes);
+    }
+
 
 
 
