@@ -17,4 +17,6 @@ tree.prettyPrint(tree.root);
 // tree.inOrderForEach(val => console.log(val));
 // tree.postOrderForEach(val => console.log(val));
 tree.depth(6);
+
+console.log(tree.isBalanced() ? "true" : "false");
 // tree.height(1);
