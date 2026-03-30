@@ -16,4 +16,5 @@ tree.prettyPrint(tree.root);
 // tree.preOrderForEach(val => console.log(val));
 // tree.inOrderForEach(val => console.log(val));
 // tree.postOrderForEach(val => console.log(val));
-tree.height(1);
+tree.depth(6);
+// tree.height(1);
