@@ -188,6 +188,27 @@ export class Tree {
 
     }
 
+    depth(value) {
+        const calcHeight = (node, value) => {
+            if (!node) return undefined;
+
+            if (node.value === value) return 0;
+
+            if (node.value > value) {
+                return calcHeight(node.leftChild, value) + 1;
+            }
+            else if (node.value < value) {
+                return calcHeight(node.rightChild, value) + 1;
+            }
+
+        }
+
+        const height = calcHeight(this.root, value);
+        console.log(Number.isNaN(height) ? undefined : height);
+
+        return Number.isNaN(height) ? undefined : height;
+    }
+
 
 
 
