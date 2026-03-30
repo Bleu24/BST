@@ -209,6 +209,23 @@ export class Tree {
         return Number.isNaN(height) ? undefined : height;
     }
 
+    isBalanced() {
+
+        const isBalancedAlgo = (node) => {
+            if (!node) return 0;
+
+            const leftHeight = isBalancedAlgo(node.leftChild);
+            const rightHeight = isBalancedAlgo(node.rightChild);
+
+            if (leftHeight === -1 || rightHeight === -1 || Math.abs(leftHeight - rightHeight) > 1) return -1;
+
+            return Math.max(leftHeight, rightHeight) + 1;
+
+        }
+
+        return isBalancedAlgo(this.root) > 0;
+    }
+
 
 
 
