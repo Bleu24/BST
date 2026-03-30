@@ -231,7 +231,9 @@ export class Tree {
 
         this.inOrderForEach(nodeValue => nodes.push(nodeValue));
 
-        return this.buildTree(nodes);
+        this.root = this.buildTree(nodes);
+
+        return;
     }
 
 
