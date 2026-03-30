@@ -6,17 +6,23 @@ const arr = removeDuplicate([20, 10, 20, 30, 2, 4, 35, 6, 2, 7, 32, 1, 7, 3, 8, 
 
 tree.buildTree(arr);
 
+console.log(tree.isBalanced()); // true
 
-// tree.deleteItem(5);
-tree.prettyPrint(tree.root);
+tree.levelOrderForEach(v => console.log(v));
+tree.preOrderForEach(v => console.log(v));
+tree.inOrderForEach(v => console.log(v));
+tree.postOrderForEach(v => console.log(v));
 
+tree.insert(1230);
+tree.insert(246);
+tree.insert(834);
 
+console.log(tree.isBalanced()); //false
+tree.rebalance();
 
-// tree.levelOrderForEach(val => console.log(val));
-// tree.preOrderForEach(val => console.log(val));
-// tree.inOrderForEach(val => console.log(val));
-// tree.postOrderForEach(val => console.log(val));
-tree.depth(6);
+console.log(tree.isBalanced()); //true
 
-console.log(tree.isBalanced() ? "true" : "false");
-// tree.height(1);
+tree.levelOrderForEach(v => console.log(v));
+tree.preOrderForEach(v => console.log(v));
+tree.inOrderForEach(v => console.log(v));
+tree.postOrderForEach(v => console.log(v));
